@@ -38,12 +38,16 @@ class Profiler:
             is_stdout_none {bool} -- set this as True if you DON'T want to enable print function in specified function (default: False)
         """
         f = open(os.devnull, "w") if is_stdout_none else sys.stdout
+        execute_profiler = lambda: self.profiler.runcall(self.__func, *self.__args, **self.__kwargs)
+
         for i in range(iteration):
-            if is_stdout_none:
-                with redirect_stdout(open(os.devnull, "w")):
-                    self.profiler.runcall(self.__func, *self.__args, **self.__kwargs)
-            else:
-                self.profiler.runcall(self.__func, *self.__args, **self.__kwargs)
+            with redirect_stdout(f):
+                execute_profiler()
+
+        try:
+            f.close()
+        except:
+            pass
 
         if to_file:
             self.profiler.dump_stats(filename)
