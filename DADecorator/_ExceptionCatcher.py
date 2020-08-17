@@ -15,8 +15,9 @@ def catch_exception(func):
     
     return wrapper
 
-@catch_exception
-def divide_by_zero():
-    print(1 / 0)
-
-divide_by_zero()
+if __name__ == "__main__":
+    @catch_exception
+    def divide_by_zero():
+        print(1 / 0)
+    
+    divide_by_zero()

@@ -33,11 +33,13 @@ class Timer:
         
         return decorator
 
-timer = Timer()
 
-@timer.timer(100)
-def hoge():
-    print("hoge")
-    time.sleep(0.01)
-
-hoge()
+if __name__ == "__main__":
+    timer = Timer()
+    
+    @timer.timer(100)
+    def hoge():
+        print("hoge")
+        time.sleep(0.01)
+    
+    hoge()

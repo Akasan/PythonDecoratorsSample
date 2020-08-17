@@ -51,8 +51,9 @@ class Profiler:
             self.profiler.print_stats()
 
 
-def hoge():
-    print("hoge")
-
-profiler = Profiler(hoge)
-profiler.execute(iteration=100, is_stdout_none=True)
+if __name__ == "__main__":
+    def hoge():
+        print("hoge")
+    
+    profiler = Profiler(hoge)
+    profiler.execute(iteration=100, is_stdout_none=True)
