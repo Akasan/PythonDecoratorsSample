@@ -44,15 +44,16 @@ class Profiler:
             with redirect_stdout(f):
                 execute_profiler()
 
+        if to_file:
+            self.profiler.dump_stats(filename)
+        else:
+            self.profiler.print_stats()
+
         try:
             f.close()
         except:
             pass
 
-        if to_file:
-            self.profiler.dump_stats(filename)
-        else:
-            self.profiler.print_stats()
 
 
 if __name__ == "__main__":
