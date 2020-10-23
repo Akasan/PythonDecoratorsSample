@@ -1,0 +1,3 @@
+line_profiler
+memory_profiler
+colorama
