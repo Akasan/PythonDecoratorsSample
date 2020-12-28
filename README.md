@@ -56,3 +56,7 @@ If you don't want to print any result of function, you only set `is_stdout_none`
 ```python
 profiler.execute(iteration=10, is_stdout_none=True)
 ```
+
+
+## TODO
+- スレッド化された関数の実行を追跡

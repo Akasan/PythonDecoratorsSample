@@ -1,45 +1,21 @@
 import time
-from numba import jit
 
 
-# ループでprintを使ったりすると瞬時に表示されないなどの問題があるため
-_print = print
-def print(text):
-    _print(text, flush=True)
+def timer(*vargs, **vkwargs):
+    iteration = vkwargs.get("iteration", 1)
 
+    def _timer(func):
+        def wrapper(*args, **kwargs):
+            st = time.time()
+            
+            for _ in range(iteration):
+                func(*args, **kwargs)
 
-class Timer:
-    def __init__(self):
-        self.times = []
-        self.sum = 0.0
-        self.cnt = 0
+            end = time.time()
 
-    def timer(self, iteration=1):
-        def decorator(func):
-            def wrapper(*args, **kwargs):
-                for i in range(iteration):
-                    st = time.time()
-                    func(*args, **kwargs)
-                    diff = time.time() - st
-                    self.times.append(diff)
-                    self.cnt += 1
-                    self.sum += diff
+            print(f"Execute {func.__name__} for {iteration} times.")
+            print(f"It took {(end - st) / iteration} second as average.")
 
-                print(f"Average time : {self.sum / self.cnt}")
-                print(f"Maximum time : {max(self.times)}")
-                print(f"Minimum time : {min(self.times)}")
+        return wrapper
 
-            return wrapper
-        
-        return decorator
-
-
-if __name__ == "__main__":
-    timer = Timer()
-    
-    @timer.timer(100)
-    def hoge():
-        print("hoge")
-        time.sleep(0.01)
-    
-    hoge()
+    return _timer
